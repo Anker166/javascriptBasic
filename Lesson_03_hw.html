@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS_Lesson_03_HW</title>
+</head>
+
+<body>
+    <script>
+        //1. С помощью цикла while вывести все простые числа в промежутке от 0 до 100.
+        var primeNumbers = [],
+            i = 2,
+            j,
+            isSymple;
+        while (i <= 100) {
+            isSymple = true;
+            j = 1;
+            while (j <= Math.sqrt(i)) {
+                if ((i % j == 0) && (j != 1) && (j != i)) {
+                    isSymple = false;
+                    break;
+                }
+                j++;
+            }
+            if (isSymple == true) {
+                primeNumbers.push(i);
+            }
+            i++;
+        }
+        document.write(primeNumbers);
+        document.write('<br>')
+
+        /*
+        2. С этого урока начинаем работать с функционалом интернет-магазина. Предположим, есть сущность корзины. Нужно реализовать функционал подсчета стоимости корзины в зависимости от находящихся в ней товаров.
+        3. Товары в корзине хранятся в массиве. Задачи:
+            a) Организовать такой массив для хранения товаров в корзине;
+            b) Организовать функцию countBasketPrice, которая будет считать стоимость корзины.
+        */
+        var Basket = [
+            {
+                title: "Товар 1",
+                price: 100,
+                quantity: 1
+            },
+            {
+                title: "Товар 2",
+                price: 200,
+                quantity: 1
+            },
+            {
+                title: "Товар 3",
+                price: 400,
+                quantity: 5
+            }
+        ];
+        
+        function countBasketPrice(array){
+            var sum = 0;
+            for (var i in array){
+                sum += array[i].price * array[i].quantity;
+            }
+            return sum;
+        }
+        
+        document.write('Итоговая стоимость товаров в корзине: ' + countBasketPrice(Basket));
+        
+        /*
+        4.*Вывести с помощью цикла for числа от 0 до 9, не используя тело цикла. Выглядеть это должно так:
+            for(…){// здесь пусто}
+        */
+                
+        for (var i = 0; i < 10; console.log('i = ' + i++)) {}
+        
+        /*
+        5. *Нарисовать пирамиду с помощью console.log, как показано на рисунке, только у вашей пирамиды должно быть 20 рядов, а не 5:
+
+        x
+        xx
+        xxx
+        xxxx
+        xxxxx
+        */
+        
+        var j, xStr;
+        
+        for (var i = 1; i <= 20; i++) {
+            j = 1
+            xStr = '';
+            while (j <= i) {
+                xStr += 'x';
+                j++;
+            }
+            console.log(xStr);
+        }
+                
+    </script>
+</body>
+
+</html>
