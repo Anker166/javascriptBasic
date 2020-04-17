@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <style>
+        .chessBoard {
+            height: 900px;
+            width: 900px;
+            margin: 0 auto;
+            outline: 2px solid black;
+        }
+
+        .square {
+            height: 100px;
+            width: 100px;
+            float: left;
+            font-size: 30px;
+            text-align: center;
+            line-height: 100px;
+            background: #FAEBD7;
+        }
+
+        .corner {
+            height: 50px;
+            width: 50px;
+        }
+
+        .letters {
+            height: 50px;
+            border-top: 2px solid black;
+            margin-bottom: -2px;
+            line-height: 50px;
+        }
+
+        .digits {
+            width: 50px;
+            border-right: 2px solid black;
+            margin-left: -2px;
+        }
+
+        .black {
+            font-size: 70px;
+            color: black;
+            text-shadow: 2px 2px white;
+        }
+
+        .white {
+            font-size: 70px;
+            color: white;
+            text-shadow: 2px 2px black;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script>
+        function getChessBoard() {
+            var digits = [8, 7, 6, 5, 4, 3, 2, 1],
+                letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+                blackFigures = {
+                    pawn: '&#9823;',
+                    other: ['&#9820', '&#9822', '&#9821', '&#9819', '&#9818', '&#9821', '&#9822', '&#9820']
+                },
+                square;
+            var body = document.querySelector('body');
+            var chessBoard = document.createElement('div'); //создаем поле для доски
+            chessBoard.className = 'chessBoard';
+            body.appendChild(chessBoard); // добавление поля для доски на страницу
+
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < 10; j++) {
+                    square = document.createElement('div'); //создаем клетку                    
+                    square.className = 'square';                    
+                    if (i == 0) {
+                        if (j == 0 || j == 9) { //углы доски сверху
+                            square.className += ' corner';
+                        } else { //клетки с буквами сверху
+                            square.innerHTML = letters[j - 1];
+                            square.style.transform = 'rotate(180deg)';
+                            square.className += ' letters';
+                        }
+
+                    } else if (i == 9) {
+                        if (j == 0 || j == 9) { //углы доски снизу
+                            square.className += ' corner';
+                        } else { //клетки с буквами снизу
+                            square.innerHTML = letters[j - 1];
+                            square.className += ' letters';
+                        }
+                    } else if (j == 0) { //клетки с цифрами слева
+                        square.style.clear = 'left';
+                        square.innerHTML = digits[i - 1];
+                        square.className += ' digits';
+                    } else if (j == 9) { //клетки с цифрами справа
+                        square.innerHTML = digits[i - 1];
+                        square.style.transform = 'rotate(180deg)';
+                        square.className += ' digits';
+                    } else { //заполнение поля клетками другого цвета
+                        square.id=letters[j-1]+digits[i-1]; // на всякий случай добавил id у клеток поля
+                        if (i % 2 == 0) {
+                            if (j % 2 != 0) {
+                                square.style.background = '#A0522D';
+                            }
+                        } else {
+                            if (j % 2 == 0) {
+                                square.style.background = '#A0522D';
+                            }
+                        }
+                        // заполнение поля фигурами
+                        if (i == 2) { // черные пешки
+                            square.innerHTML = blackFigures.pawn;
+                            square.className += ' black';
+                        } else if (i == 7) { // белые пешки
+                            square.innerHTML = blackFigures.pawn;
+                            square.className += ' white';
+                        } else if (i == 1) { // черные фигуры
+                            square.innerHTML = blackFigures.other[j - 1];
+                            square.className += ' black';
+                        } else if (i == 8) { // белые фигуры
+                            square.innerHTML = blackFigures.other[j - 1];
+                            square.className += ' white';
+                        }
+                    }
+                    chessBoard.appendChild(square); // добавление готовой клетки на страницу
+                }
+            }
+        }
+
+        getChessBoard();
+
+    </script>
+</body>
+
+</html>
