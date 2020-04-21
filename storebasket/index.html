@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>OnlineStore</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="basket">
+            <h1 class='header'>Корзина</h1>
+            <table>
+                <tr>
+                    <th>№</th>
+                    <th>Наименование товара</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                </tr>
+                <tr>
+                    <td colspan="3">Итого</td>
+                    <td id='totalSum'></td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+        <div class="goods">
+            <h1 class='header'>Товары</h1>
+            <div class="good">
+                <p class="good_name">Пирожок с яблоком</p>
+                <img src="img/apple.jpg" alt="pie"><br>
+                <p class='price'>Цена: 100 р.</p>
+                <button id='buy_1' class="buyButton">Купить</button>
+            </div>
+            <div class="good">
+                <p class="good_name">Пирожок с вишней</p>
+                <img src="img/cherry.jpg" alt="pie"><br>
+                <p class='price'>Цена: 150 р.</p>
+                <button id='buy_2' class="buyButton">Купить</button>
+            </div>
+            <div class="good">
+                <p class="good_name">Пирожок с малиной</p>
+                <img src="img/raspberry.jpg" alt="pie"><br>
+                <p class='price'>Цена: 200 р.</p>
+                <button id='buy_3' class="buyButton">Купить</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var allGoods = [{
+                    name: 'Пирожок с яблоком',
+                    price: 100,
+                },
+                {
+                    name: 'Пирожок с вишней',
+                    price: 150,
+                },
+                {
+                    name: 'Пирожок с малиной',
+                    price: 200,
+                }
+            ],
+            elementsInBasket = [];
+
+        function init() {
+            var buttons = document.querySelectorAll('button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].onclick = addToBasket;
+            }
+        }
+
+        function addToBasket(event) {
+            var basketTable = document.querySelector('tbody'),
+                totalSum = document.querySelector('#totalSum'),
+                eventElement = event.target,
+                name = allGoods[eventElement.id.slice(-1) - 1].name,
+                price = allGoods[eventElement.id.slice(-1) - 1].price,
+                newRow = document.createElement('tr'),
+                rowNumber = document.createElement('td'),
+                goodname = document.createElement('td'),
+                goodNumber = document.createElement('td'),
+                goodprice = document.createElement('td');
+            if (!elementsInBasket.includes(name)) {
+                elementsInBasket.push(name);
+                rowNumber.innerHTML = elementsInBasket.indexOf(name) + 1;
+                goodname.innerHTML = name;
+                goodNumber.innerHTML = 1;
+                goodNumber.id = 'num_' + (elementsInBasket.indexOf(name) + 1);
+                goodprice.innerHTML = price;
+                goodprice.id = 'price_' + (elementsInBasket.indexOf(name) + 1);
+                if (!totalSum.innerHTML) {
+                    totalSum.innerHTML += price;
+                } else {
+                    totalSum.innerHTML = +totalSum.innerHTML + price;
+                }
+                newRow.appendChild(rowNumber);
+                newRow.appendChild(goodname);
+                newRow.appendChild(goodNumber);
+                newRow.appendChild(goodprice);
+                basketTable.insertBefore(newRow, basketTable.children[basketTable.children.length - 1]);
+            } else {
+                var newNumber = document.querySelector('#num_' + (elementsInBasket.indexOf(name) + 1));
+                newNumber.innerHTML = +newNumber.innerHTML + 1;
+                var newPrice = document.querySelector('#price_' + (elementsInBasket.indexOf(name) + 1));
+                newPrice.innerHTML = +newPrice.innerHTML + price;
+                totalSum.innerHTML = +totalSum.innerHTML + price;
+            }
+
+        }
+        
+        window.onload = init;
+    </script>
+
+</body>
+
+</html>

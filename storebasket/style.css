@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 1000px;
+    width: 1000px;
+    margin: 0 auto;
+    background: #FFEBCD;
+}
+
+.basket {
+    min-height: 25%;
+}
+
+.goods {
+    height: 70%;
+}
+
+.header {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.good {
+    float: left;
+    height: 300px;
+    width: 300px;
+    margin-left: 2.5%;
+    margin-top: 30px;
+}
+
+.good_name {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+img {
+    padding-left: 50px;
+}
+
+.price {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.buyButton {
+    height: 30px;
+    width: 80px;
+    border-radius: 10px 10px;
+    margin-left: 110px;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 5px;
+}

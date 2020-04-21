@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Gallary</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<script>
+    function init() {
+        var images = document.querySelectorAll('img');
+        for (var i = 0; i < images.length; i++) {
+            images[i].onclick = changeBigPicture;
+        }
+
+        var buttons = document.querySelectorAll('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].onclick = slider;
+        }
+    }
+
+    function changeBigPicture(eventObj) {
+        var bigImages = document.getElementById('big_picture');
+        bigImages.innerHTML = '';
+        var eventElement = eventObj.target;
+        var imageNameParts = eventElement.id.split('_');
+        var src = 'big/' + imageNameParts[1] + '.jpg';
+        var imageDomElement = document.createElement('img');
+        imageDomElement.src = src;
+        imageDomElement.onerror = function() {
+            console.log('Нет файла ' + src);
+            imageDomElement.src = 'big/no_img.png';
+        };
+        bigImages.appendChild(imageDomElement);
+    }
+
+    function slider(eventObj) {
+        var allImages = ['big/1.jpg', 'big/2.jpg', 'big/no_img.png'];
+        var bigImages = document.getElementById('big_picture');
+        var eventElement = eventObj.target;
+        var imageDomElement = document.createElement('img');
+        if (bigImages.firstChild) {
+            checkImg = allImages.indexOf(bigImages.firstChild.src.slice(-9));
+            if (checkImg == -1) {
+                checkImg = 2;
+            }
+            if (eventElement.id == 'right_button') {
+                var newSrc = checkImg + 1;
+                if (newSrc > allImages.length - 1) {
+                    newSrc = 0
+                }
+                imageDomElement.src = allImages[newSrc];
+            }
+            if (eventElement.id == 'left_button') {
+                var newSrc = checkImg - 1;
+                if (newSrc < 0) {
+                    newSrc = 2
+                }
+                imageDomElement.src = allImages[newSrc];
+            }
+        } else {
+            if (eventElement.id == 'right_button') {
+                imageDomElement.src = allImages[0];
+            }
+            if (eventElement.id == 'left_button') {
+                imageDomElement.src = allImages[2];
+            }
+        }
+        bigImages.innerHTML = '';
+        bigImages.appendChild(imageDomElement);
+    }
+    window.onload = init;
+
+</script>
+
+<body>
+    <div class="container">
+        <div id="left"><button id="left_button">&#129080;</button></div>
+        <div id='big_picture'></div>
+        <div id="right"><button id="right_button">&#129082;</button></div>
+        <div id='gallery'> <img class='small_image' id='image_1' src="small/1.jpg" alt="image_1"> <img class='small_image' id='image_2' src="small/2.jpg" alt="image_2"> <img class='small_image' id='image_3' src="small/3.jpg" alt="image_3"> </div>
+    </div>
+</body>
+
+</html>
